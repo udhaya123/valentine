@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💌 A Special Question For You</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating hearts background */
+    .hearts-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .floating-heart {
+      position: absolute;
+      animation: floatUp linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    .container {
+      text-align: center;
+      z-index: 1;
+      padding: 2rem;
+    }
+
+    .gif-container {
+      margin-bottom: 1.5rem;
+    }
+
+    .gif-container img {
+      width: 220px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #c62828;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #d32f2f;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      min-height: 120px;
+    }
+
+    .btn-yes {
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, #e91e63, #c2185b);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Georgia', serif;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s, font-size 0.3s ease, padding 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 25px rgba(233, 30, 99, 0.6);
+    }
+
+    .btn-no {
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      background: #b0bec5;
+      color: #37474f;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Georgia', serif;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .btn-no:hover {
+      background: #90a4ae;
+    }
+
+    .no-count-msg {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #c62828;
+      min-height: 1.5rem;
+      font-style: italic;
+    }
+
+    /* ---- Celebration screen ---- */
+    .celebration {
+      display: none;
+      text-align: center;
+      z-index: 10;
+      padding: 2rem;
+    }
+
+    .celebration h1 {
+      font-size: 3rem;
+      color: #c62828;
+      margin-bottom: 1rem;
+    }
+
+    .celebration .big-heart {
+      font-size: 6rem;
+      animation: heartbeat 0.6s infinite alternate;
+    }
+
+    .celebration img {
+      width: 260px;
+      border-radius: 16px;
+      margin: 1rem 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    .celebration p {
+      font-size: 1.4rem;
+      color: #d32f2f;
+      margin-top: 1rem;
+      line-height: 2;
+    }
+
+    @keyframes heartbeat {
+      from { transform: scale(1); }
+      to   { transform: scale(1.25); }
+    }
+
+    /* Confetti */
+    .confetti-piece {
+      position: fixed;
+      z-index: 100;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Mobile friendly */
+    @media (max-width: 500px) {
+      h1 { font-size: 1.8rem; }
+      .subtitle { font-size: 1rem; }
+      .celebration h1 { font-size: 2.2rem; }
+      .celebration p { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating hearts background -->
+  <div class="hearts-bg" id="heartsBg"></div>
+
+  <!-- Main question -->
+  <div class="container" id="questionScreen">
+    <div class="gif-container">
+      <img
+        src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjJ0dHVjcTJ4NXZwNHpidGVtY3o3dDlsbDNidjRtN2N3ZjdyZHk4aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRv0ThflsHCqDrG/giphy.gif"
+        alt="cute bear"
+      />
+    </div>
+    <h1>Will You Be My Valentine? 💕</h1>
+    <p class="subtitle">Please say yes... 🥺</p>
+
+    <div class="buttons">
+      <button class="btn-yes" id="btnYes" onclick="sayYes()">Yes! 💖</button>
+      <button class="btn-no" id="btnNo" onclick="sayNo()">No 😢</button>
+    </div>
+    <p class="no-count-msg" id="noMsg"></p>
+  </div>
+
+  <!-- Celebration screen -->
+  <div class="celebration" id="celebrationScreen">
+    <div class="big-heart">💕</div>
+    <h1>Yaaay! 🥳🎉</h1>
+    <img
+      src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWxvdm9lOGt3MWM5NzNhdGVhZHdlODd0bDdtNWJ1bWE1emY4NnFteSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MDJ9IbxxvDUQM/giphy.gif"
+      alt="happy kiss"
+    />
+    <p>I knew you'd say yes! 😘<br/>Happy Valentine's Day, my love! ❤️</p>
+  </div>
+
+  <script>
+    // ---- Floating hearts ----
+    const hearts = ['❤️','💕','💗','💖','💘','💝','🩷','♥️'];
+    const bg = document.getElementById('heartsBg');
+    for (let i = 0; i < 25; i++) {
+      const span = document.createElement('span');
+      span.classList.add('floating-heart');
+      span.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+      span.style.left = Math.random() * 100 + '%';
+      span.style.fontSize = (14 + Math.random() * 20) + 'px';
+      span.style.animationDuration = (6 + Math.random() * 8) + 's';
+      span.style.animationDelay = (Math.random() * 10) + 's';
+      bg.appendChild(span);
+    }
+
+    // ---- No button logic ----
+    let noCount = 0;
+    const phrases = [
+      "Are you sure? 🥺",
+      "Really?? Think again... 😢",
+      "You're breaking my heart 💔",
+      "Please? Pretty please? 🙏",
+      "I'll be sad forever... 😭",
+      "Just click Yes already! 😤",
+      "The Yes button is RIGHT THERE 👉",
+      "You can't resist forever! 😏",
+      "My heart can't take this 😩",
+      "Okay... last chance... 🥹",
+    ];
+
+    function sayNo() {
+      noCount++;
+      const btnYes = document.getElementById('btnYes');
+      const btnNo  = document.getElementById('btnNo');
+      const msg    = document.getElementById('noMsg');
+
+      // Grow the YES button
+      const newFontSize = 1.2 + noCount * 0.35;
+      const newPadding  = 15 + noCount * 7;
+      btnYes.style.fontSize = newFontSize + 'rem';
+      btnYes.style.padding  = newPadding + 'px ' + (newPadding * 2.2) + 'px';
+
+      // Shrink the NO button
+      const noScale = Math.max(0.3, 1 - noCount * 0.12);
+      btnNo.style.transform = 'scale(' + noScale + ')';
+
+      // Show funny message
+      msg.textContent = phrases[Math.min(noCount - 1, phrases.length - 1)];
+
+      // After enough tries, hide the no button entirely
+      if (noCount >= 8) {
+        btnNo.style.opacity = '0';
+        btnNo.style.pointerEvents = 'none';
+        msg.textContent = "Oops, the No button disappeared! 😇";
+      }
+    }
+
+    function sayYes() {
+      document.getElementById('questionScreen').style.display = 'none';
+      document.getElementById('celebrationScreen').style.display = 'block';
+      launchConfetti();
+    }
+
+    // ---- Confetti burst ----
+    function launchConfetti() {
+      const colors = ['#e91e63','#ff5252','#ff4081','#f50057','#ff80ab',
+                      '#ff1744','#d50000','#ffeb3b','#ffc107','#ff9800'];
+      for (let i = 0; i < 150; i++) {
+        const piece = document.createElement('div');
+        piece.classList.add('confetti-piece');
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.top  = '-10px';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+        piece.style.width  = (6 + Math.random() * 10) + 'px';
+        piece.style.height = (6 + Math.random() * 10) + 'px';
+        piece.style.animationDuration = (2 + Math.random() * 3) + 's';
+        piece.style.animationDelay = Math.random() * 2 + 's';
+        document.body.appendChild(piece);
+      }
+      setTimeout(() => {
+        document.querySelectorAll('.confetti-piece').forEach(el => el.remove());
+      }, 7000);
+    }
+  </script>
+</body>
+</html>
